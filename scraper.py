@@ -20,19 +20,23 @@ def main(argv):
             url = arg
 
     if url != '':
-        cleanString = re.sub(r'\W+', '', url)
-        os.makedirs(cleanString)
+        try:
+            htmldata = getdata(url)
+            soup = BeautifulSoup(htmldata, 'html.parser')   
 
-        htmldata = getdata(url)
-        soup = BeautifulSoup(htmldata, 'html.parser')   
-        for item in soup.find_all('img'): 
-            if (item['src'].split('.')[-1] != 'jpg'):
-                continue
+            cleanString = re.sub(r'\W+', '', url)
+            os.makedirs(cleanString)
 
-            print('Downloading', item['src'])
+            for item in soup.find_all('img'): 
+                if (item['src'].split('.')[-1] != 'jpg'):
+                    continue
 
-            img = Image.open(requests.get(item['src'], stream = True).raw)
-            img.save(f'{cleanString}/{item['src'].split('/')[-1]}')
+                print('Downloading', item['src'])
+
+                img = Image.open(requests.get(item['src'], stream = True).raw)
+                img.save(f'{cleanString}/{item['src'].split('/')[-1]}')
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':
    main(sys.argv[1:])
