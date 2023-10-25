@@ -1,6 +1,11 @@
 # Description
 An simple image scrapper using BeautifulSoup and PIL
 
+# Installation
+```
+pip install -r requirements.txt
+```
+
 # Usage
 ```
 python scraper.py -u <url>
