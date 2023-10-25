@@ -1,5 +1,5 @@
 # Description
-An simple image scrapper using BeautifulSoup and PIL
+An simple image scraper using BeautifulSoup and PIL
 
 # Installation
 ```
