@@ -25,18 +25,16 @@ def main(argv):
             soup = BeautifulSoup(htmldata, 'html.parser')   
 
             cleanString = re.sub(r'\W+', '', url)
-            
+
             if (not os.path.exists(cleanString)):
                 os.makedirs(cleanString)
 
             for item in soup.find_all('img'): 
-                if (item['src'].split('.')[-1] != 'jpg'):
-                    continue
+                if (item['src'].split('.')[-1] == 'jpg' or item['src'].split('.')[-1] == 'png' or item['src'].split('.')[-1] == 'webp'):
+                    print('Downloading', item['src'])
 
-                print('Downloading', item['src'])
-
-                img = Image.open(requests.get(item['src'], stream = True).raw)
-                img.save(f'{cleanString}/{item['src'].split('/')[-1]}')
+                    img = Image.open(requests.get(item['src'], stream = True).raw)
+                    img.save(f'{cleanString}/{item['src'].split('/')[-1]}')
         except Exception as e:
             print(e)
 
