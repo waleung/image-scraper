@@ -25,7 +25,9 @@ def main(argv):
             soup = BeautifulSoup(htmldata, 'html.parser')   
 
             cleanString = re.sub(r'\W+', '', url)
-            os.makedirs(cleanString)
+            
+            if (not os.path.exists(cleanString)):
+                os.makedirs(cleanString)
 
             for item in soup.find_all('img'): 
                 if (item['src'].split('.')[-1] != 'jpg'):
